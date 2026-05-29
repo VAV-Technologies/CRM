@@ -345,7 +345,11 @@ export const NavigationDrawerItem = ({
           {Icon &&
             (isNonEmptyString(iconColor) ? (
               <StyledIcon>
-                <TintedIconTile Icon={Icon} color={iconColor} />
+                <TintedIconTile
+                  Icon={Icon}
+                  color={iconColor}
+                  containerSize={theme.icon.size.xl}
+                />
               </StyledIcon>
             ) : (
               <StyledIcon>

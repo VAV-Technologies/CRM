@@ -11,6 +11,9 @@ export type TintedIconTileProps = {
   color?: string | null;
   size?: number;
   stroke?: number;
+  // Sizes the surrounding tile independently of the icon, so the box can be
+  // larger than the glyph (padded look). Falls back to size, then the default.
+  containerSize?: number;
 };
 
 export const TintedIconTile = ({
@@ -18,14 +21,17 @@ export const TintedIconTile = ({
   color = DEFAULT_THEME_COLOR_FALLBACK,
   size: sizeFromProps,
   stroke: strokeFromProps,
+  containerSize: containerSizeFromProps,
 }: TintedIconTileProps) => {
   const { theme } = useContext(ThemeContext);
   const style = getIconTileColorShades(color);
   const iconSize = sizeFromProps ?? theme.icon.size.md;
   const iconStroke = strokeFromProps ?? theme.icon.stroke.md;
-  const tileDimension = isDefined(sizeFromProps)
-    ? `${sizeFromProps}px`
-    : undefined;
+  const tileDimension = isDefined(containerSizeFromProps)
+    ? `${containerSizeFromProps}px`
+    : isDefined(sizeFromProps)
+      ? `${sizeFromProps}px`
+      : undefined;
 
   return (
     <StyledTintedIconTileContainer

@@ -1,0 +1,54 @@
+name: UI Build (frontend overlay)
+
+# Builds ONLY the twenty-front static bundle so it can be overlaid onto the live
+# stock twentycrm/twenty:v2.7.3 container (dist/front) via a writable bind-mount.
+# Backend image + DB are never touched. See deploy notes in CRM/deploy.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ui/icon-box-sizing
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-front:
+    # Public-repo ubuntu-latest = 4 vCPU / 16 GB RAM, enough for the ~8 GB front build.
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Install dependencies
+        uses: ./.github/actions/yarn-install
+
+      - name: Compile translations (matches Docker build)
+        run: |
+          npx nx run twenty-front:lingui:extract
+          npx nx run twenty-front:lingui:compile
+
+      - name: Build twenty-front
+        run: NODE_OPTIONS="--max-old-space-size=8192" npx nx build twenty-front
+
+      - name: Sanity-check build output
+        run: |
+          test -f packages/twenty-front/build/index.html
+          ls -la packages/twenty-front/build
+          grep -q "twenty-env-config" packages/twenty-front/build/index.html \
+            && echo "env-config placeholder present (server will inject SERVER_URL)" \
+            || (echo "ERROR: env-config placeholder missing" && exit 1)
+
+      - name: Upload frontend build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: front-build
+          path: packages/twenty-front/build
+          retention-days: 3
+          if-no-files-found: error
