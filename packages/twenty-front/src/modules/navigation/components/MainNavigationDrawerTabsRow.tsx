@@ -32,7 +32,7 @@ const StyledRow = styled.div<{ isExpanded: boolean }>`
   justify-content: ${({ isExpanded }) =>
     isExpanded ? 'space-between' : 'center'};
   transition: gap calc(${themeCssVariables.animation.duration.normal} * 1s) ease;
-  width: ${({ isExpanded }) => (isExpanded ? '100%' : 'max-content')};
+  width: 100%;
 `;
 
 const StyledTabsPill = styled.div`

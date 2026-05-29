@@ -13,12 +13,13 @@ import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomState
 import { NavigationDrawerCollapseButton } from './NavigationDrawerCollapseButton';
 
 const StyledContainer = styled.div<{ isExpanded: boolean }>`
-  align-items: ${({ isExpanded }) => (isExpanded ? 'center' : 'flex-start')};
+  align-items: center;
   display: flex;
   flex-direction: ${({ isExpanded }) => (isExpanded ? 'row' : 'column')};
   gap: ${({ isExpanded }) => (isExpanded ? '0' : themeCssVariables.spacing[4])};
   min-height: ${PAGE_BAR_MIN_HEIGHT}px;
-  padding-right: ${themeCssVariables.spacing[2]};
+  padding-right: ${({ isExpanded }) =>
+    isExpanded ? themeCssVariables.spacing[2] : '0'};
   transition: gap calc(${themeCssVariables.animation.duration.normal} * 1s) ease;
   user-select: none;
 
@@ -30,7 +31,7 @@ const StyledContainer = styled.div<{ isExpanded: boolean }>`
 
 const StyledRightActions = styled.div<{ isExpanded: boolean }>`
   align-items: center;
-  align-self: ${({ isExpanded }) => (isExpanded ? 'auto' : 'flex-end')};
+  align-self: ${({ isExpanded }) => (isExpanded ? 'auto' : 'center')};
   display: flex;
   flex-direction: ${({ isExpanded }) => (isExpanded ? 'row' : 'column')};
   flex-shrink: 0;

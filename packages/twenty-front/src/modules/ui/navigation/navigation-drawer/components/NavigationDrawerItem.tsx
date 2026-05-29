@@ -1,5 +1,4 @@
 import { useNavigationDrawerExpanded } from '@/navigation/hooks/useNavigationDrawerExpanded';
-import { NAVIGATION_DRAWER_COLLAPSED_WIDTH } from '@/ui/layout/resizable-panel/constants/NavigationDrawerCollapsedWidth';
 import { NavigationDrawerAnimatedCollapseWrapper } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerAnimatedCollapseWrapper';
 import { NavigationDrawerItemBreadcrumb } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerItemBreadcrumb';
 import { useNavigationDrawerTooltip } from '@/ui/navigation/navigation-drawer/hooks/useNavigationDrawerTooltip';
@@ -114,18 +113,21 @@ const StyledItem = styled.button<StyledItemProps>`
     indentationLevel === 2 ? '2px' : '0'};
   min-width: 0;
   padding-bottom: ${themeCssVariables.spacing[1]};
-  padding-left: ${themeCssVariables.spacing[1]};
-  padding-right: ${({ hasRightOptions }) =>
-    hasRightOptions
-      ? themeCssVariables.spacing['0.5']
-      : themeCssVariables.spacing[1]};
+  padding-left: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? themeCssVariables.spacing[1] : '0'};
+  padding-right: ${({ hasRightOptions, isNavigationDrawerExpanded }) =>
+    !isNavigationDrawerExpanded
+      ? '0'
+      : hasRightOptions
+        ? themeCssVariables.spacing['0.5']
+        : themeCssVariables.spacing[1]};
   padding-top: ${themeCssVariables.spacing[1]};
   pointer-events: ${({ isSoon }) => (isSoon ? 'none' : 'auto')};
   text-decoration: none;
   user-select: none;
   width: ${({ isNavigationDrawerExpanded, hasRightOptions }) =>
     !isNavigationDrawerExpanded
-      ? `calc(${NAVIGATION_DRAWER_COLLAPSED_WIDTH}px - ${themeCssVariables.spacing[6]} + ${themeCssVariables.spacing[1]} + ${hasRightOptions ? themeCssVariables.spacing['0.5'] : themeCssVariables.spacing[1]})`
+      ? '100%'
       : `calc(100% - ${themeCssVariables.spacing['1.5']} + ${themeCssVariables.spacing[1]} + ${hasRightOptions ? themeCssVariables.spacing['0.5'] : themeCssVariables.spacing[1]})`};
 
   &:hover {
@@ -145,16 +147,21 @@ const StyledItem = styled.button<StyledItemProps>`
   }
 `;
 
-const StyledItemElementsContainer = styled.div`
+const StyledItemElementsContainer = styled.div<{
+  isNavigationDrawerExpanded: boolean;
+}>`
   align-items: center;
   display: flex;
+  justify-content: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? 'flex-start' : 'center'};
   width: 100%;
 `;
 
-const StyledLabelParent = styled.div`
+const StyledLabelParent = styled.div<{ isNavigationDrawerExpanded: boolean }>`
   align-items: center;
   display: flex;
-  flex: 1 1 auto;
+  flex: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? '1 1 auto' : '0 1 0'};
   min-width: 0px;
   overflow: hidden;
   text-overflow: clip;
@@ -194,13 +201,14 @@ const StyledSpacer = styled.span`
   flex-grow: 1;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.div<{ isNavigationDrawerExpanded: boolean }>`
   align-items: center;
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
   justify-content: center;
-  margin-right: ${themeCssVariables.spacing[2]};
+  margin-right: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? themeCssVariables.spacing[2] : '0'};
 `;
 
 const StyledRightOptionsContainer = styled.div`
@@ -335,7 +343,7 @@ export const NavigationDrawerItem = ({
         rel={isExternalLink ? 'noopener noreferrer' : undefined}
         draggable={isInternalLink ? false : undefined}
       >
-        <StyledItemElementsContainer>
+        <StyledItemElementsContainer isNavigationDrawerExpanded={isExpanded}>
           {showBreadcrumb && (
             <NavigationDrawerAnimatedCollapseWrapper>
               <NavigationDrawerItemBreadcrumb state={subItemState} />
@@ -344,7 +352,7 @@ export const NavigationDrawerItem = ({
 
           {Icon &&
             (isNonEmptyString(iconColor) ? (
-              <StyledIcon>
+              <StyledIcon isNavigationDrawerExpanded={isExpanded}>
                 <TintedIconTile
                   Icon={Icon}
                   color={iconColor}
@@ -352,7 +360,7 @@ export const NavigationDrawerItem = ({
                 />
               </StyledIcon>
             ) : (
-              <StyledIcon>
+              <StyledIcon isNavigationDrawerExpanded={isExpanded}>
                 <MenuItemIconBoxContainer>
                   <Icon
                     style={{
@@ -370,7 +378,7 @@ export const NavigationDrawerItem = ({
               </StyledIcon>
             ))}
 
-          <StyledLabelParent>
+          <StyledLabelParent isNavigationDrawerExpanded={isExpanded}>
             <OverflowingTextWithTooltip
               text={
                 <>

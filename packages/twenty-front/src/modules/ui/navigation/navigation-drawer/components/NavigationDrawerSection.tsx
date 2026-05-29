@@ -18,7 +18,7 @@ const StyledSectionInnerContainerMinusScrollPadding = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  gap: ${themeCssVariables.betweenSiblingsGap};
+  gap: ${themeCssVariables.spacing[1]};
   width: ${({ isMobile, isSettingsDrawer, isMainNavCollapsed }) =>
     isMobile || isSettingsDrawer || isMainNavCollapsed
       ? '100%'
