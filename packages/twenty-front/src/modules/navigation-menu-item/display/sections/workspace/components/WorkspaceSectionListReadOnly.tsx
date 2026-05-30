@@ -9,7 +9,7 @@ import { NavigationMenuItemDisplay } from '@/navigation-menu-item/display/compon
 const StyledList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${themeCssVariables.betweenSiblingsGap};
+  gap: ${themeCssVariables.spacing[1]};
   padding-top: ${themeCssVariables.betweenSiblingsGap};
 `;
 

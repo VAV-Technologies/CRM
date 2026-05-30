@@ -197,8 +197,9 @@ const StyledNavigationDrawerItemContainer = styled.div`
   width: 100%;
 `;
 
-const StyledSpacer = styled.span`
-  flex-grow: 1;
+const StyledSpacer = styled.span<{ isNavigationDrawerExpanded: boolean }>`
+  flex-grow: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? 1 : 0};
 `;
 
 const StyledIcon = styled.div<{ isNavigationDrawerExpanded: boolean }>`
@@ -397,7 +398,9 @@ export const NavigationDrawerItem = ({
             />
           </StyledLabelParent>
 
-          {showStyledSpacer && <StyledSpacer />}
+          {showStyledSpacer && (
+            <StyledSpacer isNavigationDrawerExpanded={isExpanded} />
+          )}
 
           {isSoon && (
             <NavigationDrawerAnimatedCollapseWrapper>
