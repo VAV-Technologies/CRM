@@ -18,7 +18,10 @@ const StyledSectionInnerContainerMinusScrollPadding = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  gap: ${themeCssVariables.spacing['1.5']};
+  gap: ${({ isMainNavCollapsed }) =>
+    isMainNavCollapsed
+      ? themeCssVariables.spacing['1.5']
+      : themeCssVariables.spacing[3]};
   width: 100%;
 `;
 

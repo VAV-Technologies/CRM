@@ -5,11 +5,16 @@ import type { NavigationMenuItem } from '~/generated-metadata/graphql';
 import { NavigationMenuItemType } from 'twenty-shared/types';
 import type { NavigationMenuItemSectionListDndKitProps } from '@/navigation-menu-item/display/sections/types/NavigationMenuItemSectionListDndKitProps';
 import { NavigationMenuItemDisplay } from '@/navigation-menu-item/display/components/NavigationMenuItemDisplay';
+import { isNavigationDrawerExpandedState } from '@/ui/navigation/states/isNavigationDrawerExpanded';
+import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 
-const StyledList = styled.div`
+const StyledList = styled.div<{ isExpanded: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: ${themeCssVariables.spacing['1.5']};
+  gap: ${({ isExpanded }) =>
+    isExpanded
+      ? themeCssVariables.spacing[3]
+      : themeCssVariables.spacing['1.5']};
   padding-top: ${themeCssVariables.betweenSiblingsGap};
 `;
 
@@ -31,9 +36,10 @@ export const WorkspaceSectionListReadOnly = ({
   const folderCount = filteredItems.filter(
     (item) => item.type === NavigationMenuItemType.FOLDER,
   ).length;
+  const isExpanded = useAtomStateValue(isNavigationDrawerExpandedState);
 
   return (
-    <StyledList>
+    <StyledList isExpanded={isExpanded}>
       {filteredItems.map((item: NavigationMenuItem) => (
         <NavigationMenuItemDisplay
           key={item.id}
