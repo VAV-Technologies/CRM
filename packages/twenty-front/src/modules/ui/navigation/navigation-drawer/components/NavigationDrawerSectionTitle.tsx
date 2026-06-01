@@ -15,10 +15,10 @@ const StyledTitle = styled.div`
   display: flex;
   height: ${themeCssVariables.spacing[5]};
   justify-content: space-between;
-  padding-bottom: ${themeCssVariables.spacing[1]};
+  padding-bottom: ${themeCssVariables.spacing['1.5']};
   padding-left: ${themeCssVariables.spacing[1]};
   padding-right: ${themeCssVariables.spacing[1]};
-  padding-top: ${themeCssVariables.spacing[2]};
+  padding-top: ${themeCssVariables.spacing['1.5']};
 
   &:hover {
     background-color: ${themeCssVariables.background.transparent.light};
