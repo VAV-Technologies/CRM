@@ -12,9 +12,7 @@ const StyledList = styled.div<{ isExpanded: boolean }>`
   display: flex;
   flex-direction: column;
   gap: ${({ isExpanded }) =>
-    isExpanded
-      ? themeCssVariables.spacing[3]
-      : themeCssVariables.spacing['1.5']};
+    isExpanded ? '0' : themeCssVariables.spacing['1.5']};
   padding-top: ${themeCssVariables.betweenSiblingsGap};
 `;
 
