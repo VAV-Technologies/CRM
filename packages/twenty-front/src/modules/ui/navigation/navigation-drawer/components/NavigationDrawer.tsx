@@ -60,12 +60,10 @@ const StyledContainer = styled.div<{
   flex-direction: column;
   gap: ${themeCssVariables.spacing[3]};
   height: 100%;
-  padding: ${({ isSettings, isExpanded }) =>
+  padding: ${({ isSettings }) =>
     isSettings
       ? `${themeCssVariables.spacing[3]} 0 ${themeCssVariables.spacing[4]} 0`
-      : isExpanded
-        ? `${themeCssVariables.spacing[3]} 0 ${themeCssVariables.spacing[4]} ${themeCssVariables.spacing[2]}`
-        : `${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[4]} ${themeCssVariables.spacing[1]}`};
+      : `${themeCssVariables.spacing[3]} ${themeCssVariables.spacing['1.5']} ${themeCssVariables.spacing[4]} ${themeCssVariables.spacing['1.5']}`};
   width: ${({ isExpanded }) =>
     isExpanded ? `var(${NAVIGATION_DRAWER_WIDTH_VAR})` : '100%'};
   @media (max-width: ${MOBILE_VIEWPORT}px) {

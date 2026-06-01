@@ -18,11 +18,8 @@ const StyledSectionInnerContainerMinusScrollPadding = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  gap: ${themeCssVariables.spacing[1]};
-  width: ${({ isMobile, isSettingsDrawer, isMainNavCollapsed }) =>
-    isMobile || isSettingsDrawer || isMainNavCollapsed
-      ? '100%'
-      : `calc(100% - ${themeCssVariables.spacing[2]})`};
+  gap: ${themeCssVariables.spacing['1.5']};
+  width: 100%;
 `;
 
 export const NavigationDrawerSection = ({
