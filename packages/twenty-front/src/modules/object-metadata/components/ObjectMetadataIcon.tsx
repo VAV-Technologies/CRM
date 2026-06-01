@@ -11,12 +11,14 @@ export type ObjectMetadataIconProps = {
   objectMetadataItem?: ObjectMetadataIconInput | null;
   size?: number;
   stroke?: number;
+  containerSize?: number;
 };
 
 export const ObjectMetadataIcon = ({
   objectMetadataItem,
   size,
   stroke,
+  containerSize,
 }: ObjectMetadataIconProps) => {
   const { getIcon } = useIcons();
   const Icon = getIcon(objectMetadataItem?.icon);
@@ -27,6 +29,7 @@ export const ObjectMetadataIcon = ({
       color={getObjectColorWithFallback(objectMetadataItem)}
       size={size}
       stroke={stroke}
+      containerSize={containerSize}
     />
   );
 };

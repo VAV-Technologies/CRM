@@ -11,5 +11,12 @@ export const RecordIndexPageHeaderIcon = ({
     return null;
   }
 
-  return <ObjectMetadataIcon objectMetadataItem={objectMetadataItem} />;
+  // 24px padded box (matches the sidebar icon holders) instead of the
+  // default 16px tile where the glyph touches the edges.
+  return (
+    <ObjectMetadataIcon
+      objectMetadataItem={objectMetadataItem}
+      containerSize={24}
+    />
+  );
 };

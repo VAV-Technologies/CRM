@@ -66,7 +66,7 @@ const StyledTopBarIconStyledTitleContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: ${themeCssVariables.spacing[1]};
+  gap: ${themeCssVariables.spacing[2]};
   overflow: hidden;
   width: 100%;
 `;

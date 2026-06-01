@@ -35,6 +35,7 @@ export const MultiWorkspaceDropdownClickableComponent = ({
       <Avatar
         placeholder={currentWorkspace?.displayName || ''}
         avatarUrl={currentWorkspace?.logo ?? DEFAULT_WORKSPACE_LOGO}
+        size="lg"
       />
       <StyledLabelWrapper>
         <NavigationDrawerAnimatedCollapseWrapper>

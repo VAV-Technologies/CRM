@@ -42,9 +42,9 @@ const StyledRightActions = styled.div<{ isExpanded: boolean }>`
 
 const StyledNavigationDrawerCollapseButtonContainer = styled.div`
   > * {
-    height: ${themeCssVariables.spacing[6]};
+    height: ${themeCssVariables.spacing[8]};
     padding-right: ${themeCssVariables.spacing[1]};
-    width: ${themeCssVariables.spacing[6]};
+    width: ${themeCssVariables.spacing[8]};
   }
 
   @media (max-width: ${MOBILE_VIEWPORT}px) {
@@ -87,7 +87,7 @@ export const NavigationDrawerHeader = ({
           <LightIconButton
             Icon={IconSearch}
             accent="secondary"
-            size="small"
+            size="medium"
             onClick={openRecordsSearchPage}
             aria-label={t`Search`}
           />

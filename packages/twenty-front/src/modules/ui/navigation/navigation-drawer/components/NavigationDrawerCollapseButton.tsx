@@ -52,7 +52,7 @@ export const NavigationDrawerCollapseButton = ({
             : IconLayoutSidebarRightCollapse
         }
         accent="secondary"
-        size="small"
+        size="medium"
       />
     </StyledCollapseButton>
   );
