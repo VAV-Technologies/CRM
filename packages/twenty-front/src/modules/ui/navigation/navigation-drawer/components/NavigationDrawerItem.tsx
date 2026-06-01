@@ -108,11 +108,15 @@ const StyledItem = styled.button<StyledItemProps>`
   display: flex;
   font-family: ${themeCssVariables.font.family};
   font-size: ${themeCssVariables.font.size.md};
-  height: ${themeCssVariables.spacing[7]};
+  height: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded
+      ? themeCssVariables.spacing[6]
+      : themeCssVariables.spacing[7]};
   margin-top: ${({ indentationLevel }) =>
     indentationLevel === 2 ? '2px' : '0'};
   min-width: 0;
-  padding-bottom: ${themeCssVariables.spacing[1]};
+  padding-bottom: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? '0' : themeCssVariables.spacing[1]};
   padding-left: ${({ isNavigationDrawerExpanded }) =>
     isNavigationDrawerExpanded ? themeCssVariables.spacing[1] : '0'};
   padding-right: ${({ hasRightOptions, isNavigationDrawerExpanded }) =>
@@ -121,7 +125,8 @@ const StyledItem = styled.button<StyledItemProps>`
       : hasRightOptions
         ? themeCssVariables.spacing['0.5']
         : themeCssVariables.spacing[1]};
-  padding-top: ${themeCssVariables.spacing[1]};
+  padding-top: ${({ isNavigationDrawerExpanded }) =>
+    isNavigationDrawerExpanded ? '0' : themeCssVariables.spacing[1]};
   pointer-events: ${({ isSoon }) => (isSoon ? 'none' : 'auto')};
   text-decoration: none;
   user-select: none;
