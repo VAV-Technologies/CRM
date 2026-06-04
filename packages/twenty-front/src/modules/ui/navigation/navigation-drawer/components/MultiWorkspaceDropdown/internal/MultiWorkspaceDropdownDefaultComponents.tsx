@@ -233,6 +233,13 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
         >
           <MenuItem LeftIcon={IconSettings} text={t`Settings`} />
         </UndecoratedLink>
+        <MenuItem
+          LeftIcon={IconSwitchHorizontal}
+          text={t`Switch to Nobridge Finance`}
+          onClick={() => {
+            window.location.href = '/finance';
+          }}
+        />
         {isSupportChatConfigured && (
           <MenuItem
             LeftIcon={IconMessage}
