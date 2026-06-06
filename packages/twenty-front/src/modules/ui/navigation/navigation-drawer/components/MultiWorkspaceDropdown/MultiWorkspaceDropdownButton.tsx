@@ -6,6 +6,7 @@ import { MultiWorkspaceDropdownThemesComponents } from '@/ui/navigation/navigati
 import { MultiWorkspaceDropdownWorkspacesListComponents } from '@/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownWorkspacesListComponents';
 import { MULTI_WORKSPACE_DROPDOWN_ID } from '@/ui/navigation/navigation-drawer/constants/MultiWorkspaceDropdownId';
 import { multiWorkspaceDropdownState } from '@/ui/navigation/navigation-drawer/states/multiWorkspaceDropdownState';
+import { isNavigationDrawerExpandedState } from '@/ui/navigation/states/isNavigationDrawerExpanded';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useMemo } from 'react';
@@ -16,6 +17,9 @@ export const MultiWorkspaceDropdownButton = () => {
   );
   const isLayoutCustomizationModeEnabled = useAtomStateValue(
     isLayoutCustomizationModeEnabledState,
+  );
+  const isNavigationDrawerExpanded = useAtomStateValue(
+    isNavigationDrawerExpandedState,
   );
 
   const DropdownComponents = useMemo(() => {
@@ -33,7 +37,7 @@ export const MultiWorkspaceDropdownButton = () => {
     <Dropdown
       dropdownId={MULTI_WORKSPACE_DROPDOWN_ID}
       dropdownPlacement="bottom-start"
-      dropdownOffset={{ y: 4, x: 0 }}
+      dropdownOffset={{ y: 4, x: isNavigationDrawerExpanded ? -12 : -4 }}
       clickableComponent={
         <MultiWorkspaceDropdownClickableComponent
           disabled={isLayoutCustomizationModeEnabled}
