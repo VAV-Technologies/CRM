@@ -39,7 +39,6 @@ export const MultiWorkspaceDropdownButton = () => {
           disabled={isLayoutCustomizationModeEnabled}
         />
       }
-      clickableComponentWidth="100%"
       disableClickForClickableComponent={isLayoutCustomizationModeEnabled}
       dropdownComponents={<DropdownComponents />}
       onClose={() => {

@@ -17,7 +17,7 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
   const { t } = useLingui();
 
   return (
-    <DropdownContent>
+    <DropdownContent widthInPixels={240}>
       <DropdownMenuItemsContainer>
         <MenuItemSelectAvatar
           text={currentWorkspace?.displayName ?? ''}
