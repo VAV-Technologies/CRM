@@ -1,7 +1,8 @@
 import { styled } from '@linaria/react';
 import { isNonEmptyString, isNull, isUndefined } from '@sniptt/guards';
-import { useAtom } from 'jotai';
-import { useContext } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { selectAtom } from 'jotai/utils';
+import { useContext, useMemo } from 'react';
 
 import { invalidAvatarUrlsAtomV2 } from '@ui/display/avatar/components/states/invalidAvatarUrlsAtomV2';
 import { AVATAR_PROPERTIES_BY_SIZE } from '@ui/display/avatar/constants/AvatarPropertiesBySize';
@@ -94,10 +95,6 @@ export const Avatar = ({
 }: AvatarProps) => {
   const { theme } = useContext(ThemeContext);
 
-  const [invalidAvatarUrls, setInvalidAvatarUrls] = useAtom(
-    invalidAvatarUrlsAtomV2,
-  );
-
   const avatarImageURI = isNonEmptyString(avatarUrl)
     ? getImageAbsoluteURI({
         imageUrl: avatarUrl,
@@ -105,17 +102,35 @@ export const Avatar = ({
       })
     : null;
 
+  const setInvalidAvatarUrls = useSetAtom(invalidAvatarUrlsAtomV2);
+
+  // Subscribe only to whether THIS avatar's url is invalid — not the whole list.
+  // useAtom on the shared array made every avatar re-render whenever any single
+  // logo 404'd; with hundreds of companies that is an O(n^2) re-render storm that
+  // froze/crashed the page. selectAtom isolates each avatar to its own url.
+  const isAvatarUrlInvalidAtom = useMemo(
+    () =>
+      selectAtom(invalidAvatarUrlsAtomV2, (invalidAvatarUrls) =>
+        isNonEmptyString(avatarImageURI)
+          ? invalidAvatarUrls.includes(avatarImageURI)
+          : false,
+      ),
+    [avatarImageURI],
+  );
+  const isAvatarUrlInvalid = useAtomValue(isAvatarUrlInvalidAtom);
+
   const placeholderFirstChar = placeholder?.trim()?.charAt(0);
   const isPlaceholderFirstCharEmpty =
     !placeholderFirstChar || placeholderFirstChar === '';
   const placeholderChar = placeholderFirstChar?.toUpperCase() || '-';
 
-  const showPlaceholder =
-    isNull(avatarImageURI) || invalidAvatarUrls.includes(avatarImageURI);
+  const showPlaceholder = isNull(avatarImageURI) || isAvatarUrlInvalid;
 
   const handleImageError = () => {
     if (isNonEmptyString(avatarImageURI)) {
-      setInvalidAvatarUrls((prev) => [...prev, avatarImageURI]);
+      setInvalidAvatarUrls((prev) =>
+        prev.includes(avatarImageURI) ? prev : [...prev, avatarImageURI],
+      );
     }
   };
 
