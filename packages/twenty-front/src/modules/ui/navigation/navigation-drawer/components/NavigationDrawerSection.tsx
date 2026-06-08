@@ -21,7 +21,7 @@ const StyledSectionInnerContainerMinusScrollPadding = styled.div<{
   gap: ${({ isMainNavCollapsed }) =>
     isMainNavCollapsed
       ? themeCssVariables.spacing['1.5']
-      : themeCssVariables.spacing[3]};
+      : themeCssVariables.spacing[1]};
   width: 100%;
 `;
 
