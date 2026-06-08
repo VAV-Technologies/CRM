@@ -32,9 +32,13 @@ export const MultiWorkspaceDropdownClickableComponent = ({
       isNavigationDrawerExpanded={isNavigationDrawerExpanded}
       disabled={disabled}
     >
+      {/* Always use the bundled static Nobridge logo. The in-app workspace-logo
+          uploader is unreliable on v2.7.3 (it deletes the prior file on each
+          upload and the client caches the now-dead URL), so the brand must not
+          depend on workspace.logo. Static asset = bulletproof, matches Finance. */}
       <Avatar
         placeholder={currentWorkspace?.displayName || ''}
-        avatarUrl={currentWorkspace?.logo ?? DEFAULT_WORKSPACE_LOGO}
+        avatarUrl={DEFAULT_WORKSPACE_LOGO}
         size="lg"
       />
       <StyledLabelWrapper>
